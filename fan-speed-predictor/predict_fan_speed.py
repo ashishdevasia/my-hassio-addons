@@ -3,10 +3,17 @@ import tflite_runtime.interpreter as tflite
 import joblib
 from fastapi import FastAPI
 import sys
+import pkg_resources
 
 print(f"Python version: {sys.version}")
 print(f"NumPy version: {np.__version__}")
-print(f"TFLite Runtime version: {tflite.__version__}")
+
+# Get TFLite Runtime version
+try:
+    tflite_version = pkg_resources.get_distribution("tflite-runtime").version
+    print(f"TFLite Runtime version: {tflite_version}")
+except pkg_resources.DistributionNotFound:
+    print("TFLite Runtime version: Not found")
 
 class FanSpeedPredictor:
     def __init__(self, model_path, scaler_path):
