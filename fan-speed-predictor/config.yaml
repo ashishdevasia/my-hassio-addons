@@ -4,7 +4,7 @@ version: "1.0"
 slug: "fan_speed_predictor"
 init: false
 arch:
- - armv7
- - aarch64
-ports:
- 8000/tcp: 8000
+  - armv7
+  - aarch64
+services:
+  - predict
