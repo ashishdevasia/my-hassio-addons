@@ -19,4 +19,7 @@ RUN chmod +x /run.sh && \
 # Debug: List contents of root directory
 RUN ls -la /
 
+# Print Python and pip versions
+RUN python --version && pip --version
+
 CMD ["/bin/bash", "/run.sh"]
