@@ -1,7 +1,7 @@
 import numpy as np
 import tflite_runtime.interpreter as tflite
 import joblib
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 import sys
 import pkg_resources
 
@@ -60,8 +60,12 @@ except Exception as e:
     print(f"Failed to create predictor: {str(e)}")
     raise
 
-@app.post("/predict")
-async def predict_fan_speed(temperature: float, humidity: float, heart_rate: float):
+@app.get("/predict")
+async def predict_fan_speed(
+    temperature: float = Query(..., description="Temperature value"),
+    humidity: float = Query(..., description="Humidity value"),
+    heart_rate: float = Query(..., description="Heart rate value")
+):
     try:
         fan_speed = predictor.predict(temperature, humidity, heart_rate)
         return {"predicted_fan_speed": round(fan_speed, 2)}
