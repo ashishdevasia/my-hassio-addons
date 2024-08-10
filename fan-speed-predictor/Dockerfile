@@ -10,8 +10,13 @@ COPY predict_fan_speed.py /
 COPY fan_speed_model.tflite /
 COPY scaler.joblib /
 
-# Copy the entry script
+# Copy the entry script and set permissions
 COPY run.sh /
-RUN chmod a+x /run.sh
+RUN chmod +x /run.sh && \
+   sed -i 's/\r$//' /run.sh && \
+   cat /run.sh
 
-CMD [ "/run.sh" ]
+# Debug: List contents of root directory
+RUN ls -la /
+
+CMD ["/bin/bash", "/run.sh"]
