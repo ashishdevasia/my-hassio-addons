@@ -15,6 +15,13 @@ try:
 except pkg_resources.DistributionNotFound:
     print("TFLite Runtime version: Not found")
 
+# Get scikit-learn version
+try:
+    sklearn_version = pkg_resources.get_distribution("scikit-learn").version
+    print(f"scikit-learn version: {sklearn_version}")
+except pkg_resources.DistributionNotFound:
+    print("scikit-learn version: Not found")
+
 class FanSpeedPredictor:
     def __init__(self, model_path, scaler_path):
         try:
@@ -22,7 +29,11 @@ class FanSpeedPredictor:
             self.interpreter.allocate_tensors()
             self.input_details = self.interpreter.get_input_details()
             self.output_details = self.interpreter.get_output_details()
+            print(f"Model loaded successfully. Input details: {self.input_details}, Output details: {self.output_details}")
+            
             self.scaler = joblib.load(scaler_path)
+            print(f"Scaler loaded successfully. Type: {type(self.scaler)}")
+            
             print("FanSpeedPredictor initialized successfully")
         except Exception as e:
             print(f"Error initializing FanSpeedPredictor: {str(e)}")
