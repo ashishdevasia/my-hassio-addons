@@ -1,11 +1,9 @@
 import numpy as np
 import tflite_runtime.interpreter as tflite
 import joblib
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import sys
 import pkg_resources
-import asyncio
-from homeassistant.core import HomeAssistant, ServiceCall
 
 print(f"Python version: {sys.version}")
 print(f"NumPy version: {np.__version__}")
@@ -53,31 +51,25 @@ class FanSpeedPredictor:
             print(f"Error during prediction: {str(e)}")
             raise
 
-predictor = None
+app = FastAPI()
 
-def setup(hass: HomeAssistant):
-    global predictor
+try:
+    predictor = FanSpeedPredictor('/fan_speed_model.tflite', '/scaler.joblib')
+    print("Predictor created successfully")
+except Exception as e:
+    print(f"Failed to create predictor: {str(e)}")
+    raise
+
+@app.post("/predict")
+async def predict_fan_speed(temperature: float, humidity: float, heart_rate: float):
     try:
-        predictor = FanSpeedPredictor('/fan_speed_model.tflite', '/scaler.joblib')
-        print("Predictor created successfully")
-
-        async def predict_fan_speed(call: ServiceCall):
-            temperature = call.data.get('temperature')
-            humidity = call.data.get('humidity')
-            heart_rate = call.data.get('heart_rate')
-            
-            try:
-                fan_speed = predictor.predict(temperature, humidity, heart_rate)
-                hass.states.async_set('fan_speed_predictor.predicted_speed', round(fan_speed, 2))
-            except Exception as e:
-                hass.states.async_set('fan_speed_predictor.error', str(e))
-
-        hass.services.async_register('fan_speed_predictor', 'predict', predict_fan_speed)
-        
+        fan_speed = predictor.predict(temperature, humidity, heart_rate)
+        return {"predicted_fan_speed": round(fan_speed, 2)}
     except Exception as e:
-        print(f"Failed to create predictor: {str(e)}")
-        raise
+        raise HTTPException(status_code=500, detail=str(e))
 
-    return True
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
 
-print("Home Assistant integration setup complete")
+print("FastAPI app created successfully")
