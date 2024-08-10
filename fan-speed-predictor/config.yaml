@@ -6,5 +6,5 @@ init: false
 arch:
   - armv7
   - aarch64
-services:
-  - predict
+ports:
+  8000/tcp: 8000
