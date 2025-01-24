@@ -4,7 +4,7 @@ ENV LANG C.UTF-8
 
 # Install dependencies
 RUN pip3 install --no-cache-dir numpy==2.0.2 joblib==1.2.0 scikit-learn==1.0.2 fastapi==0.95.0 uvicorn==0.21.1
-RUN pip3 install --no-cache-dir tflite-runtime==2.11.0
+RUN pip3 install --no-cache-dir tflite-runtime==2.14.0
 
 # Copy your prediction script and model
 COPY predict_fan_speed.py /
