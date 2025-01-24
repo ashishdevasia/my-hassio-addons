@@ -68,7 +68,12 @@ async def predict_fan_speed(
 ):
     try:
         fan_speed = predictor.predict(temperature, humidity, heart_rate)
-        return {"predicted_fan_speed": round(fan_speed, 2)}
+        return {
+            "predicted_fan_speed": round(fan_speed, 2),
+            "temperature": temperature,
+            "humidity": humidity,
+            "heart_rate": heart_rate
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
