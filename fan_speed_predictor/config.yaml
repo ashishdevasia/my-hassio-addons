@@ -1,10 +1,10 @@
 name: "Fan Speed Predictor"
 description: "Predicts fan speed based on temperature, humidity, and heart rate"
-version: "1.1"
+version: "1.2"
 slug: "fan_speed_predictor"
 init: false
 arch:
   - armv7
   - aarch64
 ports:
-  8000/tcp: 8000
+  48762/tcp: 48762
