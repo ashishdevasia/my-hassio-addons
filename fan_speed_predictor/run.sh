@@ -6,4 +6,4 @@ echo "Contents of current directory:"
 ls -la
 
 echo "Running Python script"
-python3 -m uvicorn predict_fan_speed:app --host 0.0.0.0 --port 8000
+python3 -m uvicorn predict_fan_speed:app --host 0.0.0.0 --port 48762
