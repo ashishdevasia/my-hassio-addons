@@ -4,7 +4,7 @@ import joblib
 from fastapi import FastAPI, HTTPException, Query
 import sys
 import pkg_resources
-from datetime.datetime import now
+from datetime import datetime
 
 print(f"Python version: {sys.version}")
 print(f"NumPy version: {np.__version__}")
@@ -69,7 +69,7 @@ async def predict_fan_speed(
 ):
     try:
         fan_speed = predictor.predict(temperature, humidity, heart_rate)
-        print(f'{now()}: Predicted Fan Speed: {round(fan_speed, 2)}')
+        print(f'{datetime.now()}: Predicted Fan Speed: {round(fan_speed, 2)}')
         return {
             "predicted_fan_speed": round(fan_speed, 2),
             "temperature": temperature,
