@@ -1,6 +1,6 @@
 name: "Fan Speed Predictor"
 description: "Predicts fan speed based on temperature, humidity, and heart rate"
-version: "1.4"
+version: "1.5"
 slug: "fan_speed_predictor"
 init: false
 arch:
