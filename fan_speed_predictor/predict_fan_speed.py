@@ -1,5 +1,5 @@
 import numpy as np
-import tflite_runtime.interpreter as tflite
+from ai_edge_litert import interpreter as tflite
 import joblib
 from fastapi import FastAPI, HTTPException, Query
 import sys
@@ -11,10 +11,10 @@ print(f"NumPy version: {np.__version__}")
 
 # Get TFLite Runtime version
 try:
-    tflite_version = pkg_resources.get_distribution("tflite-runtime").version
-    print(f"TFLite Runtime version: {tflite_version}")
+    tflite_version = pkg_resources.get_distribution("ai-edge-litert").version
+    print(f"AI Edge LiteRT version: {tflite_version}")
 except pkg_resources.DistributionNotFound:
-    print("TFLite Runtime version: Not found")
+    print("AI Edge LiteRT version: Not found")
 
 # Get scikit-learn version
 try:
