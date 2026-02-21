@@ -3,7 +3,7 @@ FROM python:3.12-slim
 ENV LANG C.UTF-8
 
 # Install dependencies (versions matched to training environment)
-RUN pip3 install --no-cache-dir numpy==1.26.4 joblib==1.2.0 scikit-learn==1.6.1 fastapi==0.95.0 uvicorn==0.21.1
+RUN pip3 install --no-cache-dir numpy==1.26.4 joblib==1.4.2 scikit-learn==1.6.1 fastapi==0.95.0 uvicorn==0.21.1
 RUN pip3 install --no-cache-dir ai-edge-litert
 
 # Copy your prediction script and model
