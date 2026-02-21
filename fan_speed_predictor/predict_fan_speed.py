@@ -3,7 +3,7 @@ from ai_edge_litert import interpreter as tflite
 import joblib
 from fastapi import FastAPI, HTTPException, Query
 import sys
-import pkg_resources
+from importlib.metadata import version, PackageNotFoundError
 from datetime import datetime
 
 print(f"Python version: {sys.version}")
@@ -11,16 +11,16 @@ print(f"NumPy version: {np.__version__}")
 
 # Get TFLite Runtime version
 try:
-    tflite_version = pkg_resources.get_distribution("ai-edge-litert").version
+    tflite_version = version("ai-edge-litert")
     print(f"AI Edge LiteRT version: {tflite_version}")
-except pkg_resources.DistributionNotFound:
+except PackageNotFoundError:
     print("AI Edge LiteRT version: Not found")
 
 # Get scikit-learn version
 try:
-    sklearn_version = pkg_resources.get_distribution("scikit-learn").version
+    sklearn_version = version("scikit-learn")
     print(f"scikit-learn version: {sklearn_version}")
-except pkg_resources.DistributionNotFound:
+except PackageNotFoundError:
     print("scikit-learn version: Not found")
 
 class FanSpeedPredictor:
